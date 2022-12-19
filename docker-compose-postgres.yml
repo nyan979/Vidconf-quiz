@@ -1,0 +1,25 @@
+version: "3.7"
+
+services:
+  postgres:
+    image: postgres:14.5-alpine
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: vidconfAdmin
+      POSTGRES_PASSWORD: vidconfPass
+      POSTGRES_DB: vidconf
+
+  adminer:
+    image: adminer
+    ports:
+      - 8080:8080
+
+  minio:
+    image: quay.io/minio/minio
+    command: server /data --console-address ":9001"
+    volumes:
+      - "/mnt/data:/data"
+    ports:
+      - 9000:9000
+      - 9001:9001

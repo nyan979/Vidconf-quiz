@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option go_package = "github.com/pion/ion/proto/ion";
+
+package ion;
+
+message Empty {}
+
+message RPC {
+    string protocol = 1;
+    string addr = 2;
+    map<string, string> params = 3;
+}
+
+message Node {
+  string dc = 1;
+  string nid = 2;
+  string service = 3;
+  RPC rpc = 4;
+}

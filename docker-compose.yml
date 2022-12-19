@@ -1,0 +1,185 @@
+version: "3.7"
+
+services:
+  islb:
+    image: howeli/vidconf-ion_islb:1.10.0
+    build:
+      dockerfile: ./docker/islb.Dockerfile
+      context: .
+    volumes:
+      - "./configs/docker/islb.toml:/configs/islb.toml"
+    depends_on:
+      - nats
+      - redis
+    networks:
+      - ionnet
+
+  sfu:
+    image: howeli/vidconf-ion_sfu:1.10.0
+    build:
+      dockerfile: ./docker/sfu.Dockerfile
+      context: .
+    volumes:
+      - "./configs/docker/sfu.toml:/configs/sfu.toml"
+    ports:
+      - "5000:5000/udp"
+    depends_on:
+      - nats
+    networks:
+      - ionnet
+
+  signal:
+    image: howeli/vidconf-ion_signal:1.10.0
+    build:
+      dockerfile: ./docker/signal.Dockerfile
+      context: .
+    volumes:
+      - "./configs/docker/signal.toml:/configs/signal.toml"
+    ports:
+      - 5551:5551
+    depends_on:
+      - nats
+    networks:
+      - ionnet
+
+  app-room:
+    image: howeli/vidconf-ion_app-room:1.10.0.6
+    build:
+      dockerfile: ./docker/app-room.Dockerfile
+      context: .
+    volumes:
+      - "./configs/docker/app-room.toml:/configs/app-room.toml"
+    depends_on:
+      - nats
+      - redis
+    networks:
+      - ionnet
+
+  app-room-sentry:
+    image: howeli/vidconf-ion_app-room-sentry:0.7.0.8
+    build:
+      dockerfile: ./docker/app-room-sentry.Dockerfile
+      context: .
+    volumes:
+      - "./configs/docker/app-room-sentry.toml:/configs/app-room-sentry.toml"
+    depends_on:
+      - nats
+      - signal
+    networks:
+      - ionnet
+
+  app-room-mgmt:
+    image: howeli/vidconf-ion_app-room-mgmt:0.7.0.8
+    build:
+      dockerfile: ./docker/app-room-mgmt.Dockerfile
+      context: .
+    volumes:
+      - "./configs/docker/app-room-mgmt.toml:/configs/app-room-mgmt.toml"
+    ports:
+      # Dev port
+      - 7070:7070
+    depends_on:
+      - nats
+      - redis
+      - signal
+    networks:
+      - ionnet
+
+  app-room-recorder:
+    image: howeli/vidconf-ion_app-room-recorder:0.7.0.8
+    build:
+      dockerfile: ./docker/app-room-recorder.Dockerfile
+      context: .
+    volumes:
+      - "./configs/docker/app-room-recorder.toml:/configs/app-room-recorder.toml"
+    depends_on:
+      - nats
+      - signal
+    networks:
+      - ionnet
+
+  app-room-playback:
+    image: howeli/vidconf-ion_app-room-playback:0.7.0.8
+    build:
+      dockerfile: ./docker/app-room-playback.Dockerfile
+      context: .
+    volumes:
+      - "./configs/docker/app-room-playback.toml:/configs/app-room-playback.toml"
+    depends_on:
+      - nats
+      - signal
+    networks:
+      - ionnet
+
+  web:
+    image: howeli/vidconf-ion-app-web:1.1.0
+    build:
+      dockerfile: ../VidConf-ion-app-web/Dockerfile
+      context: ../VidConf-ion-app-web
+    volumes:
+      # Dev caddy file
+      - "../VidConf-ion-app-web/Caddyfile:/etc/caddy/Caddyfile"
+      - "caddy:/data"
+    ports:
+      # Dev port
+      - 9090:9090
+    depends_on:
+      - signal
+    networks:
+      - ionnet
+    environment:
+    - WWW_URL
+    - ADMIN_EMAIL
+
+  nats:
+    image: nats
+    ports:
+      - 4222:4222
+    networks:
+      - ionnet
+
+  redis:
+    image: redis:6.0.9
+    ports:
+      - 6379:6379
+    networks:
+      - ionnet
+
+  postgres:
+    image: postgres:14.5-alpine
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: vidconfAdmin
+      POSTGRES_PASSWORD: vidconfPass
+      POSTGRES_DB: vidconf
+
+  adminer:
+    image: adminer
+    ports:
+      - 8080:8080
+
+  minio:
+    image: quay.io/minio/minio
+    command: server /data --console-address ":9001"
+    volumes:
+      - "/mnt/data:/data"
+    ports:
+      - 9000:9000
+      - 9001:9001
+
+  stunserver:
+    image: howeli/vidconf-ion_stunserver:1.2.13
+    ports:
+      - 3478:3478/udp
+      - 3478:3478
+    networks:
+      - ionnet
+
+networks:
+  ionnet:
+    name: ionnet
+    driver: bridge
+
+volumes:
+  caddy:
