@@ -578,7 +578,7 @@ func (s *RoomPlaybackSession) playbackCtrl(ctrl Ctrl) {
 	s.speed10 = ctrl.speed10
 	s.isChat = ctrl.isChat
 	s.isVideo = ctrl.isVideo
-	s.isAudio = false
+	s.isAudio = ctrl.isAudio
 	s.actualRefTime = time.Now().Add(time.Second)
 	for id := range s.peers {
 		s.peers[id].ctrlCh <- Ctrl{

@@ -476,7 +476,7 @@ func (p *PlaybackPeer) sendTrack(key string, trackCh chan Ctrl) {
 			if !isRunning {
 				continue
 			}
-			if trackIdx >= maxTrackIdx {
+			if trackIdx < maxTrackIdx {
 				continue
 			}
 			if speed10*time.Since(actualRefTime) <
