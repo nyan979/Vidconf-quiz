@@ -576,9 +576,9 @@ func (s *RoomPlaybackSession) playbackCtrl(ctrl Ctrl) {
 		s.batchSendChat()
 	}
 	s.speed10 = ctrl.speed10
-	s.isChat = false
+	s.isChat = ctrl.isChat
 	s.isVideo = ctrl.isVideo
-	s.isAudio = ctrl.isAudio
+	s.isAudio = false
 	s.actualRefTime = time.Now().Add(time.Second)
 	for id := range s.peers {
 		s.peers[id].ctrlCh <- Ctrl{
