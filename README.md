@@ -64,3 +64,10 @@ curl -v --request POST 'http://localhost:7070/rooms'
 }'  <br>
 But partcipants cannot join the room sessions with following errors:
 ###### ERROR default: [room_signal.go:60] [server.(*RoomSignalService).Signal] Join err: rpc error: code = Internal desc = RoomId '501f6fb3-48b0-4490-9278-d3245c49955a' session not started 
+
+### Quiz 6:
+Tag: q6 <br>
+Fault reported: <br>
+After some code changes, room-playback occasionally fail with following errors:
+###### ERROR default: [room-playback_peer.go:219] [playback.(*PlaybackPeer).preparePlaybackPeer] could not process download: The specified key does not exist. 
+###### ERROR default: [room-playback_peer.go:258] [playback.(*PlaybackPeer).preparePlaybackPeer] preparePlaybackPeer peerId '189fffa7-bbc0-4fb8-9ab0-cd9d4967f3cf' found no usable tracks 
