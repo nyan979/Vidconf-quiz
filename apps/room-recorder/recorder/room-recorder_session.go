@@ -400,6 +400,15 @@ func (s *RoomRecorderSession) insertTrackOnInterval(
 				trackSavedId,
 				len(tracks))
 			return
+		case <-s.sessionCh:
+			s.insertTracks(
+				tracks,
+				trackId,
+				dbId,
+				folderName,
+				trackSavedId,
+				len(tracks))
+			return
 		case <-s.exitCh:
 			s.insertTracks(
 				tracks,

@@ -34,7 +34,6 @@ func (s *RoomPlaybackService) onStartPlayback(msg *nats.Msg) {
 		msg.Respond([]byte(err.Error()))
 		return
 	}
-	go session.run()
 	s.sessions.Store(sessionId, session)
 	msg.Respond([]byte(""))
 }
