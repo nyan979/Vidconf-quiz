@@ -146,7 +146,7 @@ func NewRoomMgmtSentryService(config Config, natsConn *nats.Conn) *RoomSentrySer
 
 func (s *RoomSentryService) start() {
 	log.Infof("--- Starting NATS Subscription ---")
-	onRoomUpdatesSub, err := s.natsConn.Subscribe(constants.UPDATEROOM_TOPIC+"*", s.onRoomUpdates)
+	onRoomUpdatesSub, err := s.natsConn.Subscribe(constants.UPDATEROOM_TOPIC, s.onRoomUpdates)
 	if err != nil {
 		log.Errorf("NATS Subscription error: %s", err)
 		os.Exit(1)
