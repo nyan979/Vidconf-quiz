@@ -40,4 +40,4 @@ playbackIdPrefix = "bac00cab"
 # The address the monitoring server will listen on.
 addr = "0.0.0.0:7081"
 # time in seconds per chopped section
-choppedInSeconds = 5
+choppedInSeconds = 5000

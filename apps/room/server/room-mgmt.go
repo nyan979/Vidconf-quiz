@@ -80,7 +80,7 @@ func (s *RoomSignalService) getRoomsByRoomid(roomId, uId, userName string) (stri
 		return "", errors.New(roomEnded(roomId))
 	}
 
-	isAllowed := false
+	isAllowed := true
 	if strings.HasPrefix(uId, s.rs.systemUserIdPrefix) {
 		isAllowed = true
 	}
