@@ -576,7 +576,7 @@ func (s *RoomPlaybackSession) playbackCtrl(ctrl Ctrl) {
 		s.batchSendChat()
 	}
 	s.speed10 = ctrl.speed10
-	s.isChat = ctrl.isChat
+	s.isChat = false
 	s.isVideo = ctrl.isVideo
 	s.isAudio = ctrl.isAudio
 	s.actualRefTime = time.Now().Add(time.Second)
