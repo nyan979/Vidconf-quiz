@@ -49,3 +49,18 @@ curl -v --request POST 'http://localhost:7070/rooms'
     ]
 }'  <br>
 But despite setting the "allowedUserId" to be a list of restricted usersIds, anybody can still join the room, with no error messages in the logs
+
+### Quiz 5:
+Tag: q5 <br>
+Fault reported: <br>
+After some code changes, rooms can be successfully booked via room-mgmt API with following: <br>
+curl -v --request POST 'http://localhost:7070/rooms' 
+--header 'Content-Type: application/json' 
+--data-raw '{
+    "requestor": "10206739",
+    "name": "test-room-ABC",
+    "startTime": "2021-11-27T00:00:00+08:00",
+    "endTime": "2023-09-07T14:00:00Z"
+}'  <br>
+But partcipants cannot join the room sessions with following errors:
+###### ERROR default: [room_signal.go:60] [server.(*RoomSignalService).Signal] Join err: rpc error: code = Internal desc = RoomId '501f6fb3-48b0-4490-9278-d3245c49955a' session not started 
