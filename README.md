@@ -71,3 +71,10 @@ Fault reported: <br>
 After some code changes, room-playback occasionally fail with following errors:
 ###### ERROR default: [room-playback_peer.go:219] [playback.(*PlaybackPeer).preparePlaybackPeer] could not process download: The specified key does not exist. 
 ###### ERROR default: [room-playback_peer.go:258] [playback.(*PlaybackPeer).preparePlaybackPeer] preparePlaybackPeer peerId '189fffa7-bbc0-4fb8-9ab0-cd9d4967f3cf' found no usable tracks 
+
+### Quiz 7:
+Tag: q7 <br>
+Fault reported: <br>
+After some code changes, playback can be successfully created via room-mgmt API with following: <br>
+curl -v --request POST 'http://localhost:7070/playback/rooms/3508886e-e6f8-48ec-b5a8-4cfa9701b779' <br>
+But nothing is played-back, with no error messages in the logs
