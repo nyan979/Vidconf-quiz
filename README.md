@@ -78,3 +78,8 @@ Fault reported: <br>
 After some code changes, playback can be successfully created via room-mgmt API with following: <br>
 curl -v --request POST 'http://localhost:7070/playback/rooms/3508886e-e6f8-48ec-b5a8-4cfa9701b779' <br>
 But nothing is played-back, with no error messages in the logs
+
+### Quiz 8:
+Tag: q8 <br>
+Fault reported: <br>
+After some code changes, playback sessions does not have audio, with no error messages in the logs
