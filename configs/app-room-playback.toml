@@ -21,7 +21,7 @@ endpoint = "vidconf:9000"
 useSSL = false
 username = "minioadmin"
 password = "minioadmin"
-bucketName = "vidconf"
+bucketName = "vidcoonf"
 
 [signal]
 # The addr for grpc signalling
