@@ -83,3 +83,8 @@ But nothing is played-back, with no error messages in the logs
 Tag: q8 <br>
 Fault reported: <br>
 After some code changes, playback sessions does not have audio, with no error messages in the logs
+
+### Quiz 9:
+Tag: q9 <br>
+Fault reported: <br>
+After some code changes, playback sessions does not have either video or audio, with no error messages in the logs
